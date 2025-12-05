@@ -1,59 +1,119 @@
-# 🎭 Face Recognition API (KD-Tree & KNN)
+# Face Recognition API — KD-Tree & KNN
 
-> Sistema de reconhecimento facial de alta performance utilizando **C** para estruturas de dados (KD-Tree + Heap) e **Python** (FastAPI) para a interface.
+> Sistema de reconhecimento facial de utilizando **C** para estruturas de dados e **Python** para a API e interface.
 
-![Language](https://img.shields.io/badge/language-C-blue)
-![Language](https://img.shields.io/badge/language-Python-yellow)
-![Framework](https://img.shields.io/badge/framework-FastAPI-green)
+---
 
-## 📖 Descrição do Projeto
+## 📖 Visão Geral
 
-Este trabalho consiste no desenvolvimento de um sistema de busca de reconhecimento facial otimizado. O núcleo do projeto é uma **KD-Tree (K-Dimensional Tree)**, uma estrutura de dados de partição de espaço binário, utilizada aqui para indexar e buscar embeddings faciais de 128 dimensões.
+Este projeto implementa uma **KD-Tree** otimizada para realizar buscas em vetores de *embeddings* faciais de **128 dimensões**, permitindo encontrar rapidamente os vizinhos mais próximos.
 
-O objetivo principal foi refatorar uma implementação base para suportar buscas eficientes dos **N vizinhos mais próximos** (KNN), utilizando uma estrutura de **Heap** para priorização.
+Também foi implementado um mecanismo de **KNN** utilizando **Max-Heap**, garantindo consultas de múltiplos vizinhos sem perda de eficiência.
 
-### ✨ Diferenciais Implementados
+O objetivo do trabalho foi refatorar uma base inicial, melhorando modularidade, desempenho e escalabilidade.
 
-1.  **Refatoração para 128 Dimensões:**
-    * Adaptação da estrutura de dados para suportar vetores de *embeddings* (128 floats) e identificadores de usuários (strings), simulando um cenário real de biometria facial.
+---
 
-2.  **Busca KNN com Heap:**
-    * Implementação de um **Max-Heap** para gerenciar os candidatos a vizinhos mais próximos durante a navegação na árvore.
-    * Isso permite retornar não apenas o vizinho mais próximo, mas os **N** mais similares, com poda eficiente da árvore (backtracking otimizado).
+## Funcionalidades
 
-### Fonte dos Dados
-As faces utilizadas para povoar a base de dados foram retiradas do dataset público **LFW (Labeled Faces in the Wild)**, disponível no Kaggle.
-* **Dataset:** [LFW - People (Face Recognition)](https://www.kaggle.com/datasets/atulanandjha/lfwpeople)
-* **Quantidade:** Foram inseridos vetores de características (embeddings) de aproximadamente **1000 faces** distintas na árvore.
+### KD-Tree para embeddings de 128 dimensões
+- Suporte total a vetores de 128 floats.
+- Armazena identificadores (strings) associados a cada face.
+- Estruturada para dados de alta dimensionalidade usados em biometria real.
 
-## 📂 Estrutura dos Arquivos
+### Busca KNN com Heap
+- Implementação de **Max-Heap** para armazenar candidatos durante a busca.
+- Backtracking inteligente com poda.
+- Retorno eficiente dos **N vizinhos mais próximos**.
 
-* `kdtree.c`: Código fonte em C contendo a implementação da KD-Tree, do Heap e das funções de distância euclidiana.
-* `app.py`: Servidor da API construído com FastAPI.
-* `kdtree_wrapper.py`: Interface de ligação entre Python e C.
+### API em Python com FastAPI
+- Endpoints rápidos e simples.
+- Integração direta com o módulo C.
 
-## 🚀 Instalação e Execução
+---
 
-### Pré-requisitos
-* GCC (ou outro compilador C)
-* Python 3.8+
+## 🗂 Dataset Utilizado
 
-### Passo 1: Compilar a Biblioteca C
-A API Python precisa carregar o código C compilado como uma biblioteca dinâmica (`.so`).
+As faces utilizadas para testes são provenientes do dataset **LFW – Labeled Faces in the Wild**, amplamente usado em pesquisa.
 
-**No Linux/MacOS:**
+- **Fonte:** Kaggle  
+- **Link:** https://www.kaggle.com/datasets/atulanandjha/lfwpeople  
+- **Quantidade utilizada:** ~1000 embeddings faciais.
+
+---
+
+## 📦 Estrutura do Projeto
+
+```plaintext
+/
+├── auxiliar/                    # Scripts auxiliares e dados do projeto
+│   ├── embeddings/              # Vetores de embeddings utilizados na KD-Tree
+│   ├── popular.py               # Script para popular a árvore com embeddings
+│   └── reconhecer_face.py       # Script para realizar a busca KNN e reconhecer uma face
+│
+├── app.py                       # Servidor da API (FastAPI)
+├── kdtree.c                     # Implementação da KD-Tree + Max-Heap em C
+├── kdtree_wrapper.py            # Interface entre Python e o módulo em C
+└── README.md                    # Documento do projeto
+
+```
+
+---
+
+## 🚀 Como Executar
+
+### 🔧 Pré-requisitos
+- GCC (ou outro compilador C)
+- Python 3.8+
+- pip
+
+---
+
+## 🏗️ Passo 1 — Compilar o módulo C
+
+### **Linux / macOS**
 ```bash
 gcc -shared -o kdtree.so -fPIC kdtree.c
+```
 
-
-**No Windows:**
+### **Windows**
 ```bash
 gcc -shared -o kdtree.dll kdtree.c
+```
 
-### Passo 2: Instalar Dependências do Python
+---
+
+## 📦 Passo 2 — Instalar dependências Python
+
 ```bash
 pip install fastapi uvicorn numpy pydantic
+```
 
-### Passo 3: Rodar a API
+---
+
+## ▶️ Passo 3 — Rodar a API
+
 ```bash
 uvicorn app:app --reload
+```
+
+A API ficará disponível em:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## 📌 Melhorias Futuras (opcionais)
+
+- Implementar balanceamento automático da KD-Tree.
+- Adicionar cache LRU para resultados de consultas repetidas.
+- Criar interface web minimalista em React.
+- Adicionar benchmark comparativo (KD-Tree vs Brute Force).
+
+---
+
+## 📄 Licença
+
+Este projeto pode ser utilizado para fins acadêmicos e educacionais.
