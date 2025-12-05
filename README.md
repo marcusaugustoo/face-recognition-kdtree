@@ -42,7 +42,7 @@ As faces utilizadas para testes são provenientes do dataset **LFW – Labeled F
 
 ---
 
-## 📦 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```plaintext
 /
@@ -60,7 +60,7 @@ As faces utilizadas para testes são provenientes do dataset **LFW – Labeled F
 
 ---
 
-## 🚀 Como Executar
+## Como Executar
 
 ### 🔧 Pré-requisitos
 - GCC (ou outro compilador C)
@@ -69,7 +69,7 @@ As faces utilizadas para testes são provenientes do dataset **LFW – Labeled F
 
 ---
 
-## 🏗️ Passo 1 — Compilar o módulo C
+## Passo 1 — Compilar o módulo C
 
 ### **Linux / macOS**
 ```bash
@@ -83,7 +83,7 @@ gcc -shared -o kdtree.dll kdtree.c
 
 ---
 
-## 📦 Passo 2 — Instalar dependências Python
+## Passo 2 — Instalar dependências Python
 
 ```bash
 pip install fastapi uvicorn numpy pydantic
@@ -91,7 +91,7 @@ pip install fastapi uvicorn numpy pydantic
 
 ---
 
-## ▶️ Passo 3 — Rodar a API
+## Passo 3 — Rodar a API
 
 ```bash
 uvicorn app:app --reload
@@ -105,15 +105,11 @@ http://127.0.0.1:8000
 
 ---
 
-## 📌 Melhorias Futuras (opcionais)
+## Melhorias Futuras 
 
 - Implementar balanceamento automático da KD-Tree.
 - Adicionar cache LRU para resultados de consultas repetidas.
-- Criar interface web minimalista em React.
-- Adicionar benchmark comparativo (KD-Tree vs Brute Force).
+- Criar interface web minimalista.
 
 ---
 
-## 📄 Licença
-
-Este projeto pode ser utilizado para fins acadêmicos e educacionais.
